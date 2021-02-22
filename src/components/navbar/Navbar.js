@@ -3,21 +3,19 @@ import styled from "styled-components";
 
 // Icons
 import { AiOutlineMenu } from "react-icons/ai";
+import { WiAlien } from "react-icons/wi";
 
-const Navbar = () => {
+const Navbar = ({ sideNavActive, setSidenavActive }) => {
 	const [active, setActive] = useState(false);
 
-	useLayoutEffect(() => {
-		if (window.innerWidth <= 1024) {
-			setActive(true);
-		}
-		console.log(window.innerWidth);
-	}, [window.innerWidth]);
+	const handleNavActive = () => {
+		setSidenavActive(!sideNavActive);
+	};
 
 	return (
 		<StyledNav>
 			<div className="nav-container">
-				<span className="nav-toggle">
+				<span className="nav-toggle" onClick={handleNavActive}>
 					<AiOutlineMenu />
 				</span>
 				<ul className="nav-menu">
@@ -32,11 +30,13 @@ const Navbar = () => {
 					</a>
 				</ul>
 				<div className="nav-logo">
-					<h2>Nabla</h2>
+					<h2>
+						<WiAlien />
+					</h2>
 				</div>
 				<div className="nav-controls">
 					<input type="text" placeholder="Search" className="nav-search" />
-					<a href="#" className="nav-action">
+					<a href="#" className="nav-action signin">
 						Sign in
 					</a>
 					<a href="#" className="nav-action signup">
@@ -58,6 +58,7 @@ const StyledNav = styled.nav`
 	top: 0;
 	left: 0;
 	right: 0;
+	z-index: 100;
 
 	.nav-container {
 		height: 100%;
@@ -79,24 +80,35 @@ const StyledNav = styled.nav`
 
 		.nav-toggle {
 			display: none;
-			font-size: 2rem;
+			font-size: 1.7rem;
 			color: #d6bbbb;
+			cursor: pointer;
+
+			svg {
+				vertical-align: middle;
+			}
 		}
 
 		.nav-logo {
-			font-size: 1rem;
+			font-size: 2rem;
 			font-weight: lighter;
 			color: #333;
+			cursor: pointer;
+			transition: 0.2s;
 
 			svg {
-				vertical-align: baseline;
+				vertical-align: middle;
+			}
+
+			&:hover {
+				color: #54a0bf;
 			}
 		}
 
 		.nav-controls {
 			.nav-search {
 				border: 1px solid gray;
-				padding: 0.4rem 1rem;
+				padding: 0.3rem 1rem;
 				margin-right: 1rem;
 				color: #d6bbbb;
 				border-radius: 30px;
@@ -132,6 +144,16 @@ const StyledNav = styled.nav`
 
 			.nav-toggle {
 				display: block;
+			}
+
+			.nav-controls {
+				.nav-search {
+					display: none;
+				}
+
+				.signin {
+					display: none;
+				}
 			}
 		}
 	}

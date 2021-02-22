@@ -6,9 +6,20 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  
+
   body {
       font-family: 'Poppins', sans-serif;
       background-color: rgb(17, 23, 25);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+      text-rendering: optimizeSpeed;
+      line-height: 1.5;
+  }
+
+  img {
+    width: 100%;
+    object-fit: cover;
   }
   
   input, button {

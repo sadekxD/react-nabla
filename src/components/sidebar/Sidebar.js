@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 
 //obj
-import { SidebarObj } from "../objects/SidebarObj";
+import { SidebarObj } from "../../objects/SidebarObj";
 
 const Sidebar = () => {
 	const ref = useRef(null);
@@ -29,7 +29,7 @@ const Sidebar = () => {
 				<ul ref={ref} className="side-menu">
 					{SidebarObj.map((item) => (
 						<a
-							key={item}
+							key={item.id}
 							href="#"
 							onClick={() => activeItem(item.id)}
 							className="side-item"
