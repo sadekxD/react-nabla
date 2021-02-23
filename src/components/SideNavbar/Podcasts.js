@@ -1,15 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 
 //obj
-import { SidebarObj } from "../../objects/SidebarObj";
+import { PodcastObj } from "../../objects/SidebarObj";
 
-const Sidebar = () => {
+const Podcasts = () => {
 	const ref = useRef(null);
-
-	useEffect(() => {
-		if (!useRef) return null;
-	}, [ref]);
 
 	const activeItem = (id) => {
 		const nodes = ref.current.childNodes;
@@ -23,11 +19,11 @@ const Sidebar = () => {
 	};
 
 	return (
-		<StyledSidebar>
+		<StyledPodcasts>
 			<div className="sidebar">
-				<h3 className="side-header">Browse</h3>
+				<h3 className="side-header">BROWSE PODCASTS</h3>
 				<ul ref={ref} className="side-menu">
-					{SidebarObj.map((item) => (
+					{PodcastObj.map((item) => (
 						<a
 							key={item.id}
 							href="#"
@@ -40,21 +36,14 @@ const Sidebar = () => {
 					))}
 				</ul>
 			</div>
-		</StyledSidebar>
+		</StyledPodcasts>
 	);
 };
 
-const StyledSidebar = styled.div`
-	max-width: 260px;
+const StyledPodcasts = styled.div`
 	width: 100%;
-	background-color: rgb(25, 31, 33);
-	height: calc(100vh - 72px);
-	padding-top: 2.5rem;
-	position: sticky;
-	top: 72px;
 
 	.sidebar {
-		height: 100%;
 		text-align: center;
 
 		.side-header {
@@ -97,9 +86,9 @@ const StyledSidebar = styled.div`
 		}
 	}
 
-	@media screen and (max-width: 1024px) {
+	/* @media screen and (max-width: 1024px) {
 		display: none;
-	}
+	} */
 `;
 
-export default Sidebar;
+export default Podcasts;

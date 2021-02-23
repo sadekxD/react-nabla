@@ -1,13 +1,22 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+
+// Components
+import Category from "../Items/Category";
+import { SidebarObj } from "../../objects/SidebarObj";
+import Sidebar from "../sidebar/Sidebar";
+import Categories from "./Categories";
+import Podcasts from "./Podcasts";
 
 const Sidenav = ({ sideNavActive }) => {
 	const ref = useRef(null);
 	const [active, setActive] = useState(false);
-
-	const handleScroll = () => {
+	const [activeSlide, setActiveSlide] = useState(null);
+	const handleScroll = (slide) => {
 		setActive(!active);
+		setActiveSlide(slide);
 	};
 
 	return (
@@ -23,27 +32,39 @@ const Sidenav = ({ sideNavActive }) => {
 								Featured
 							</a>
 						</li>
-						<li className="nav-item" onClick={handleScroll}>
+						<li className="nav-item" onClick={() => handleScroll("categories")}>
 							Videos
 							<span>
 								<MdKeyboardArrowRight />
 							</span>
 						</li>
-						<li className="nav-item">
+						<li className="nav-item" onClick={() => handleScroll("podcasts")}>
 							Podcasts
 							<span>
 								<MdKeyboardArrowRight />
 							</span>
 						</li>
 						<li className="nav-item">
-							<a href="#" className="signin">
-								Signin
-							</a>
+							<Link to="login" className="signin">
+								Sign in
+							</Link>
 						</li>
 					</ul>
 				</div>
 				<div className="col-2">
-					<button onClick={handleScroll}>go back</button>
+					<button onClick={handleScroll} className="btn-back">
+						<span className="return-icon">
+							<MdKeyboardArrowLeft />
+						</span>{" "}
+						BACK
+					</button>
+					{activeSlide === "categories" ? (
+						<Categories />
+					) : activeSlide === "podcasts" ? (
+						<Podcasts />
+					) : (
+						""
+					)}
 				</div>
 			</div>
 		</StyledSideNav>
@@ -62,7 +83,7 @@ const StyledSideNav = styled.div`
 	box-shadow: rgb(0 0 0 / 16%) 0px 12px 12px;
 	overflow-y: auto;
 	transition: transform 300ms ease-out 0s;
-	overflow: hidden;
+	overflow-x: hidden;
 	transform: ${({ sideNavActive }) =>
 		sideNavActive ? "translateX(0%)" : "translateX(-110%)"};
 
@@ -133,6 +154,24 @@ const StyledSideNav = styled.div`
 		width: 100%;
 		height: 100%;
 		overflow: auto;
+
+		.btn-back {
+			font-size: 14px;
+			padding: 20px 2rem;
+			margin: 10px 0;
+			width: 100%;
+			color: rgb(153, 153, 153);
+			font-weight: 300;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+
+			.return-icon {
+				display: flex;
+				font-size: 20px;
+				margin-right: 0.2rem;
+			}
+		}
 	}
 `;
 

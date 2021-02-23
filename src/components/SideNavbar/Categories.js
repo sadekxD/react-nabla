@@ -4,7 +4,7 @@ import styled from "styled-components";
 //obj
 import { SidebarObj } from "../../objects/SidebarObj";
 
-const Sidebar = () => {
+const Categories = () => {
 	const ref = useRef(null);
 
 	useEffect(() => {
@@ -23,9 +23,9 @@ const Sidebar = () => {
 	};
 
 	return (
-		<StyledSidebar>
+		<StyledCategories>
 			<div className="sidebar">
-				<h3 className="side-header">Browse</h3>
+				<h3 className="side-header">BROWSE VIDEOS</h3>
 				<ul ref={ref} className="side-menu">
 					{SidebarObj.map((item) => (
 						<a
@@ -40,21 +40,14 @@ const Sidebar = () => {
 					))}
 				</ul>
 			</div>
-		</StyledSidebar>
+		</StyledCategories>
 	);
 };
 
-const StyledSidebar = styled.div`
-	max-width: 260px;
+const StyledCategories = styled.div`
 	width: 100%;
-	background-color: rgb(25, 31, 33);
-	height: calc(100vh - 72px);
-	padding-top: 2.5rem;
-	position: sticky;
-	top: 72px;
 
 	.sidebar {
-		height: 100%;
 		text-align: center;
 
 		.side-header {
@@ -97,9 +90,9 @@ const StyledSidebar = styled.div`
 		}
 	}
 
-	@media screen and (max-width: 1024px) {
+	/* @media screen and (max-width: 1024px) {
 		display: none;
-	}
+	} */
 `;
 
-export default Sidebar;
+export default Categories;

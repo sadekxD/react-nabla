@@ -1,28 +1,23 @@
 import React from "react";
 import styled from "styled-components";
-import VideoItem from "./VideoItem";
+import Card from "./Card";
 
-const Content = () => {
+const Creators = () => {
 	return (
 		<StyledContent>
-			<div className="content-wrapper">
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
+			<div className="creator-wrapper">
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
+				<Card />
 			</div>
 		</StyledContent>
 	);
@@ -31,7 +26,7 @@ const Content = () => {
 const StyledContent = styled.div`
 	padding: 24px 50px;
 
-	.content-wrapper {
+	.creator-wrapper {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 		grid-template-rows: auto;
@@ -51,11 +46,8 @@ const StyledContent = styled.div`
 			padding: 24px 24px;
 		}
 
-		@media screen and (max-width: 960px) {
-			padding: 24px 24px;
-		}
-
 		@media screen and (max-width: 768px) {
+			grid-template-columns: repeat(2, 1fr);
 			padding: 24px 12px;
 		}
 
@@ -83,4 +75,4 @@ const StyledContent = styled.div`
 	}
 `;
 
-export default Content;
+export default Creators;

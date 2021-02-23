@@ -1,14 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-const Header = () => {
+const Header = ({ setActiveItem }) => {
 	return (
 		<StyledHeader>
 			<div className="head">
 				<h2>Everythings</h2>
 				<div className="head-group">
-					<div className="head-item active">Videos</div>
-					<div className="head-item">Creators</div>
+					<div
+						className="head-item active"
+						onClick={() => setActiveItem("videos")}
+					>
+						Videos
+					</div>
+					<div className="head-item" onClick={() => setActiveItem("creators")}>
+						Creators
+					</div>
 				</div>
 			</div>
 		</StyledHeader>
@@ -55,6 +62,7 @@ const StyledHeader = styled.div`
 	}
 
 	@media screen and (max-width: 768px) {
+		padding: 0 0;
 		.head {
 			flex-direction: column;
 			align-items: stretch;

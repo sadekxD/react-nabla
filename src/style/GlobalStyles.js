@@ -17,6 +17,10 @@ export const GlobalStyle = createGlobalStyle`
       line-height: 1.5;
   }
 
+  .main {
+    margin-top: 72px;
+  }
+
   img {
     width: 100%;
     object-fit: cover;

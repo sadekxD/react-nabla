@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // Icons
 import { AiOutlineMenu } from "react-icons/ai";
@@ -22,9 +23,9 @@ const Navbar = ({ sideNavActive, setSidenavActive }) => {
 					<a href="#" className="nav-link">
 						Featured
 					</a>
-					<a href="#" className="nav-link">
+					<Link to="videos" className="nav-link">
 						Videos
-					</a>
+					</Link>
 					<a href="#" className="nav-link">
 						Podcast
 					</a>
@@ -36,12 +37,12 @@ const Navbar = ({ sideNavActive, setSidenavActive }) => {
 				</div>
 				<div className="nav-controls">
 					<input type="text" placeholder="Search" className="nav-search" />
-					<a href="#" className="nav-action signin">
+					<Link to="login" className="nav-action signin">
 						Sign in
-					</a>
-					<a href="#" className="nav-action signup">
+					</Link>
+					<Link to="join" className="nav-action signup">
 						Signup
-					</a>
+					</Link>
 				</div>
 			</div>
 		</StyledNav>
@@ -81,7 +82,7 @@ const StyledNav = styled.nav`
 		.nav-toggle {
 			display: none;
 			font-size: 1.7rem;
-			color: #d6bbbb;
+			color: #54a0bf;
 			cursor: pointer;
 
 			svg {
@@ -122,13 +123,12 @@ const StyledNav = styled.nav`
 
 			.nav-action {
 				font-size: 14px;
-				padding: 0.4rem 1rem;
+				padding: 0.3rem 1rem;
 				margin-right: 1rem;
 				color: #54a0bf;
 
 				&.signup {
 					border-radius: 30px;
-					border: 1px solid #d6bbbb;
 					background: #54a0bf;
 					color: #fefefe;
 				}
@@ -149,6 +149,10 @@ const StyledNav = styled.nav`
 			.nav-controls {
 				.nav-search {
 					display: none;
+				}
+
+				.signup {
+					margin: 0;
 				}
 
 				.signin {
