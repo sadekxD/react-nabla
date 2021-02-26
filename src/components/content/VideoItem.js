@@ -1,15 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const VideoItem = () => {
+const VideoItem = ({ id, title, thumb }) => {
 	return (
-		<StyledItem href="#">
+		<StyledItem to={`/videos/${id}/`}>
 			<div className="thumbnail-wrapper">
-				<img
-					src="https://gvimage.zype.com/5c182d06649f0f134a001703/6032d2e0aeceae0001f49b02/custom_thumbnail/240.png?1613943520"
-					alt="thumbnail"
-					className="thumbnail"
-				/>
+				<img src={thumb} alt="thumbnail" className="thumbnail" />
 				<div className="video-length">10:12</div>
 			</div>
 			<div className="video-info">
@@ -27,9 +24,7 @@ const VideoItem = () => {
 						alt="avatar"
 					/>
 				</picture>
-				<div className="title">
-					The Making of Ingenuity: A Martian Helicopter
-				</div>
+				<div className="title">{title}</div>
 				<div className="meta">
 					<span className="avata-name">JackSlumber </span>
 					<span className="bullet">•</span>
@@ -40,7 +35,7 @@ const VideoItem = () => {
 	);
 };
 
-const StyledItem = styled.a`
+const StyledItem = styled(Link)`
 	max-width: 100%;
 	min-width: 100%;
 	max-height: 300px;
@@ -122,3 +117,38 @@ const StyledItem = styled.a`
 `;
 
 export default VideoItem;
+
+{
+	/* <div className="thumbnail-wrapper">
+				<img
+					src="https://gvimage.zype.com/5c182d06649f0f134a001703/6032d2e0aeceae0001f49b02/custom_thumbnail/240.png?1613943520"
+					alt="thumbnail"
+					className="thumbnail"
+				/>
+				<div className="video-length">10:12</div>
+			</div>
+			<div className="video-info">
+				<picture className="avatar">
+					<source
+						srcSet="https://d2jmuhqh03r5dz.cloudfront.net/5c182d06649f0f134a001703/playlist_image/5f343df12a4fe300018dafbf/1597259249/64.webp"
+						type="image/webp"
+					/>
+					<source
+						srcSet="https://d2jmuhqh03r5dz.cloudfront.net/5c182d06649f0f134a001703/playlist_image/5f343df12a4fe300018dafbf/1597259249/64.jpg"
+						type="image/webp"
+					/>
+					<img
+						src="https://d2jmuhqh03r5dz.cloudfront.net/5c182d06649f0f134a001703/playlist_image/5f343df12a4fe300018dafbf/1597259249/64.jpg"
+						alt="avatar"
+					/>
+				</picture>
+				<div className="title">
+					The Making of Ingenuity: A Martian Helicopter
+				</div>
+				<div className="meta">
+					<span className="avata-name">JackSlumber </span>
+					<span className="bullet">•</span>
+					<span className="timestamp"> 4 days ago</span>
+				</div>
+			</div> */
+}

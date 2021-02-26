@@ -1,21 +1,34 @@
 import React from "react";
 import styled from "styled-components";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 
-const Header = ({ setActiveItem }) => {
+const Header = ({ setActiveItem, category, url }) => {
+	const history = useHistory();
+
 	return (
 		<StyledHeader>
 			<div className="head">
-				<h2>Everythings</h2>
+				<h2>{category}</h2>
 				<div className="head-group">
 					<div
 						className="head-item active"
-						onClick={() => setActiveItem("videos")}
+						onClick={() => {
+							setActiveItem("videos");
+							history.push(`${url}`);
+						}}
 					>
 						Videos
 					</div>
-					<div className="head-item" onClick={() => setActiveItem("creators")}>
+					<Link
+						className="head-item"
+						to={`${url}/c`}
+						// onClick={() => {
+						// 	setActiveItem("creators");
+						// 	history.push(`/${url}creators`);
+						// }}
+					>
 						Creators
-					</div>
+					</Link>
 				</div>
 			</div>
 		</StyledHeader>

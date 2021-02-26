@@ -1,28 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import VideoItem from "./VideoItem";
+import { useParams, useLocation, useHistory } from "react-router-dom";
+import axios from "axios";
 
 const Content = () => {
+	const location = useLocation();
+	const history = useHistory();
+	const [data, setData] = useState([]);
+
+	const getData = async () => {
+		const res = await axios.get(
+			"https://my-json-server.typicode.com/sadekxD/json-for-test/videos/"
+		);
+		if (res.status === 200) {
+			setData(res.data);
+			console.log(res.data);
+		}
+	};
+
+	const getByCat = async (cat) => {
+		const res = await axios.get(
+			`https://my-json-server.typicode.com/sadekxD/json-for-test/videos/?category=${cat}`
+		);
+		if (res.status === 200) {
+			setData(res.data);
+			console.log(res.data);
+		}
+	};
+
+	useEffect(() => {
+		getData();
+	}, []);
+
+	useEffect(() => {
+		const params = new URLSearchParams(location.search);
+		const category = params.get("category");
+
+		if (category) {
+			document.title = category;
+			getByCat(category);
+		}
+
+		if (category === "everything") {
+			history.push("/videos/");
+			getData();
+		}
+	}, [location]);
+
 	return (
 		<StyledContent>
 			<div className="content-wrapper">
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
-				<VideoItem />
+				{data.map((v, index) => (
+					<VideoItem key={index} title={v.title} thumb={v.thumb} id={v.id} />
+				))}
 			</div>
 		</StyledContent>
 	);

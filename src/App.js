@@ -6,8 +6,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Sidenav from "./components/SideNavbar/Sidenav";
 import Main from "./pages/Main";
+import Play from "./components/play/Play";
 import Signin from "./components/authentication/Signin";
 import Signup from "./components/authentication/Signup";
+import User from "./components/user/User";
+import Upload from "./components/upload/Upload";
 
 // Globastyles
 import { GlobalStyle } from "./style/GlobalStyles";
@@ -23,16 +26,28 @@ function App() {
 					sideNavActive={sideNavActive}
 					setSidenavActive={setSidenavActive}
 				/>
-				<Sidenav sideNavActive={sideNavActive} />
+				<Sidenav
+					sideNavActive={sideNavActive}
+					setSidenavActive={setSidenavActive}
+				/>
 				<Switch>
-					<Route exact path="/videos/">
+					<Route path="/videos">
 						<Main />
 					</Route>
-					<Route exact path="/login/">
+					<Route exact path="/videos/:id">
+						<Play />
+					</Route>
+					<Route exact path="/login">
 						<Signin />
 					</Route>
-					<Route exact path="/join/">
+					<Route exact path="/join">
 						<Signup />
+					</Route>
+					<Route exact path="/user">
+						<User />
+					</Route>
+					<Route exact path="/upload">
+						<Upload />
 					</Route>
 				</Switch>
 			</Router>

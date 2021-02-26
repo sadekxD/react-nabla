@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
 // Components
@@ -10,10 +10,18 @@ import Sidebar from "../sidebar/Sidebar";
 import Categories from "./Categories";
 import Podcasts from "./Podcasts";
 
-const Sidenav = ({ sideNavActive }) => {
+const Sidenav = ({ sideNavActive, setSidenavActive }) => {
 	const ref = useRef(null);
 	const [active, setActive] = useState(false);
 	const [activeSlide, setActiveSlide] = useState(null);
+	const history = useHistory();
+
+	useEffect(() => {
+		history.listen(() => {
+			setSidenavActive(false);
+		});
+	});
+
 	const handleScroll = (slide) => {
 		setActive(!active);
 		setActiveSlide(slide);
@@ -45,7 +53,7 @@ const Sidenav = ({ sideNavActive }) => {
 							</span>
 						</li>
 						<li className="nav-item">
-							<Link to="login" className="signin">
+							<Link to="/login/" className="signin">
 								Sign in
 							</Link>
 						</li>
@@ -55,7 +63,7 @@ const Sidenav = ({ sideNavActive }) => {
 					<button onClick={handleScroll} className="btn-back">
 						<span className="return-icon">
 							<MdKeyboardArrowLeft />
-						</span>{" "}
+						</span>
 						BACK
 					</button>
 					{activeSlide === "categories" ? (

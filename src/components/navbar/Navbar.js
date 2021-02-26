@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // Icons
 import { AiOutlineMenu } from "react-icons/ai";
@@ -8,9 +8,15 @@ import { WiAlien } from "react-icons/wi";
 
 const Navbar = ({ sideNavActive, setSidenavActive }) => {
 	const [active, setActive] = useState(false);
+	const [search, setSearch] = useState("");
+	const history = useHistory();
 
 	const handleNavActive = () => {
 		setSidenavActive(!sideNavActive);
+	};
+
+	const handleSearchChange = (e) => {
+		setSearch(e.target.value);
 	};
 
 	return (
@@ -23,7 +29,7 @@ const Navbar = ({ sideNavActive, setSidenavActive }) => {
 					<a href="#" className="nav-link">
 						Featured
 					</a>
-					<Link to="videos" className="nav-link">
+					<Link to="/videos" className="nav-link">
 						Videos
 					</Link>
 					<a href="#" className="nav-link">
@@ -36,11 +42,23 @@ const Navbar = ({ sideNavActive, setSidenavActive }) => {
 					</h2>
 				</div>
 				<div className="nav-controls">
-					<input type="text" placeholder="Search" className="nav-search" />
-					<Link to="login" className="nav-action signin">
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							history.push(`?search=${search}`);
+						}}
+					>
+						<input
+							type="text"
+							onChange={handleSearchChange}
+							placeholder="Search"
+							className="nav-search"
+						/>
+					</form>
+					<Link to="/login" className="nav-action signin">
 						Sign in
 					</Link>
-					<Link to="join" className="nav-action signup">
+					<Link to="/join" className="nav-action signup">
 						Signup
 					</Link>
 				</div>
@@ -107,6 +125,7 @@ const StyledNav = styled.nav`
 		}
 
 		.nav-controls {
+			display: flex;
 			.nav-search {
 				border: 1px solid gray;
 				padding: 0.3rem 1rem;

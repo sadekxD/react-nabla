@@ -146,7 +146,6 @@ const StyledSignup = styled.div`
 
 			.btn-submit {
 				color: rgba(100, 100, 100);
-				padding: 0.5rem 1rem;
 				width: 100%;
 				font-size: 16px;
 				margin-top: 1.3rem;
@@ -155,7 +154,7 @@ const StyledSignup = styled.div`
 				border-radius: 6px;
 				font-size: 13px;
 				font-weight: 600;
-				padding: 16px;
+				padding: 10px;
 				width: 100%;
 				font-family: "Poppins";
 				cursor: pointer;
@@ -163,7 +162,7 @@ const StyledSignup = styled.div`
 		}
 
 		.signin-text {
-			font-size: 14px;
+			font-size: 12px;
 			color: rgb(161, 164, 166);
 			margin-bottom: 1rem;
 		}

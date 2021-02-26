@@ -5,14 +5,29 @@ import Content from "../components/content/Content";
 import Header from "../components/header/Header";
 import Creators from "../components/creators/Creators";
 
+// router
+import { Switch, Route, useRouteMatch } from "react-router-dom";
+
 const Main = () => {
 	const [activeItem, setActiveItem] = useState("videos");
+	const [category, setCategory] = useState("Everything");
+	let { path, url } = useRouteMatch();
+	console.log(path, url);
+
 	return (
 		<StyledMain>
-			<Sidebar />
+			<Sidebar category={category} setCategory={setCategory} />
 			<main id="main">
-				<Header setActiveItem={setActiveItem} />
-				{activeItem === "videos" ? <Content /> : <Creators />}
+				<Header category={category} url={url} setActiveItem={setActiveItem} />
+				<Switch>
+					<Route exact path={`${path}`}>
+						<Content />
+					</Route>
+					<Route exact path={`${path}/c`}>
+						<Creators />
+					</Route>
+				</Switch>
+				{/* {activeItem === "videos" ? <Content /> : <Creators />} */}
 			</main>
 		</StyledMain>
 	);

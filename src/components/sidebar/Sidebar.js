@@ -1,17 +1,18 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 //obj
 import { SidebarObj } from "../../objects/SidebarObj";
 
-const Sidebar = () => {
+const Sidebar = ({ category, setCategory }) => {
 	const ref = useRef(null);
 
 	useEffect(() => {
 		if (!useRef) return null;
 	}, [ref]);
 
-	const activeItem = (id) => {
+	const activeItem = (id, title = "Everything") => {
 		const nodes = ref.current.childNodes;
 		for (var i = 0; i < nodes.length; i++) {
 			if (i === id) {
@@ -20,6 +21,13 @@ const Sidebar = () => {
 				nodes[i].classList.remove("active");
 			}
 		}
+
+		setCategory(title);
+	};
+
+	const catgoryChange = (title) => {
+		setCategory(title);
+		console.log(category);
 	};
 
 	return (
@@ -28,15 +36,19 @@ const Sidebar = () => {
 				<h3 className="side-header">Browse</h3>
 				<ul ref={ref} className="side-menu">
 					{SidebarObj.map((item) => (
-						<a
+						<Link
 							key={item.id}
-							href="#"
-							onClick={() => activeItem(item.id)}
+							onClick={() => catgoryChange(item.title)}
+							to={{
+								pathname: "/videos",
+								search: `category=${item.title.toLowerCase()}`,
+							}}
+							onClick={() => activeItem(item.id, item.title)}
 							className="side-item"
 						>
 							<span className="icon">{item.icon}</span>
 							{item.title}
-						</a>
+						</Link>
 					))}
 				</ul>
 			</div>
