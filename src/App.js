@@ -34,7 +34,7 @@ function App() {
 					<Route path="/videos">
 						<Main />
 					</Route>
-					<Route exact path="/videos/:id">
+					<Route exact path="/watch/:id">
 						<Play />
 					</Route>
 					<Route exact path="/login">

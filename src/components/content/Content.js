@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import VideoItem from "./VideoItem";
-import { useParams, useLocation, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 const Content = () => {
 	const location = useLocation();
-	const history = useHistory();
 	const [data, setData] = useState([]);
+	console.log(location.state);
 
 	const getData = async () => {
 		const res = await axios.get(
@@ -15,7 +15,6 @@ const Content = () => {
 		);
 		if (res.status === 200) {
 			setData(res.data);
-			console.log(res.data);
 		}
 	};
 
@@ -25,7 +24,6 @@ const Content = () => {
 		);
 		if (res.status === 200) {
 			setData(res.data);
-			console.log(res.data);
 		}
 	};
 
@@ -37,13 +35,13 @@ const Content = () => {
 		const params = new URLSearchParams(location.search);
 		const category = params.get("category");
 
-		if (category) {
+		if (category && category !== "everything") {
 			document.title = category;
 			getByCat(category);
 		}
 
 		if (category === "everything") {
-			history.push("/videos/");
+			// history.push("videos");
 			getData();
 		}
 	}, [location]);

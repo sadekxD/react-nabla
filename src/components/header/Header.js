@@ -21,7 +21,7 @@ const Header = ({ setActiveItem, category, url }) => {
 					</div>
 					<Link
 						className="head-item"
-						to={`${url}/c`}
+						to={`${url}/creators`}
 						// onClick={() => {
 						// 	setActiveItem("creators");
 						// 	history.push(`/${url}creators`);

@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 //obj
 import { SidebarObj } from "../../objects/SidebarObj";
 
 const Sidebar = ({ category, setCategory }) => {
 	const ref = useRef(null);
+	const location = useLocation();
 
 	useEffect(() => {
 		if (!useRef) return null;
@@ -42,6 +43,7 @@ const Sidebar = ({ category, setCategory }) => {
 							to={{
 								pathname: "/videos",
 								search: `category=${item.title.toLowerCase()}`,
+								state: { prevPath: location.pathname },
 							}}
 							onClick={() => activeItem(item.id, item.title)}
 							className="side-item"

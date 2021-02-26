@@ -12,7 +12,6 @@ const Main = () => {
 	const [activeItem, setActiveItem] = useState("videos");
 	const [category, setCategory] = useState("Everything");
 	let { path, url } = useRouteMatch();
-	console.log(path, url);
 
 	return (
 		<StyledMain>
@@ -23,7 +22,7 @@ const Main = () => {
 					<Route exact path={`${path}`}>
 						<Content />
 					</Route>
-					<Route exact path={`${path}/c`}>
+					<Route exact path={`${path}/creators`}>
 						<Creators />
 					</Route>
 				</Switch>

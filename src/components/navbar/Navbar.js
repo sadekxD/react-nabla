@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 // Icons
 import { AiOutlineMenu } from "react-icons/ai";
@@ -10,6 +10,7 @@ const Navbar = ({ sideNavActive, setSidenavActive }) => {
 	const [active, setActive] = useState(false);
 	const [search, setSearch] = useState("");
 	const history = useHistory();
+	const location = useLocation();
 
 	const handleNavActive = () => {
 		setSidenavActive(!sideNavActive);
@@ -58,7 +59,15 @@ const Navbar = ({ sideNavActive, setSidenavActive }) => {
 					<Link to="/login" className="nav-action signin">
 						Sign in
 					</Link>
-					<Link to="/join" className="nav-action signup">
+					<Link
+						to={{
+							pathname: "/join",
+							state: {
+								prevPath: location.pathname,
+							},
+						}}
+						className="nav-action signup"
+					>
 						Signup
 					</Link>
 				</div>

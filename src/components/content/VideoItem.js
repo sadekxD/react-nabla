@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const VideoItem = ({ id, title, thumb }) => {
 	return (
-		<StyledItem to={`/videos/${id}/`}>
+		<StyledItem to={`/watch/${id}`}>
 			<div className="thumbnail-wrapper">
 				<img src={thumb} alt="thumbnail" className="thumbnail" />
 				<div className="video-length">10:12</div>

@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 
 const Signup = () => {
+	const location = useLocation();
+	console.log(location);
 	return (
 		<StyledSignup>
 			<div className="form-wrapper">
