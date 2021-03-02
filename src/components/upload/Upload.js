@@ -1,71 +1,84 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
 const Upload = () => {
+	const [data, setData] = useState({
+		title: "",
+		description: "",
+		username: "sadek",
+	});
+	const [file, setFile] = useState(null);
+
 	const ref = useRef(null);
 
-	const handleFileUpload = (e) => {
-		let data = new FormData();
-		data.append("file", e.target.files[0]);
+	const handleFile = (e) => {
+		setFile(e.target.files[0]);
+	};
 
-		// if (e.target.files && e.target.files[0]) {
-		// 	var reader = new FileReader();
-		// 	reader.onload = function (e) {
-		// 		console.log("loaded");
-		// 		let video = document.createElement("video");
-		// 		video.src = e.target.result;
-		// 		video.load();
-		// 		ref.current.prepend(video);
-		// 	};
-
-		// 	reader.readAsDataURL(e.target.files[0]);
-		// }
-
-		const options = {
-			onUploadProgress: (progressEvent) => {
-				const { loaded, total } = progressEvent;
-				let percent = Math.floor((loaded * 100) / total);
-				console.log(`${loaded}kb of ${total}kb | ${percent}%`);
-			},
-		};
-
-		axios
-			.post(
-				"https://run.mocky.io/v3/59cd6ae3-7cda-4ff4-9451-1d18e5a75e44",
-				data,
-				{
-					headers: {
-						"content-Type": "multipart/form-data",
-					},
-					onUploadProgress: (data) => {
-						console.log(Math.floor((data.loaded * 100) / data.total));
-					},
-				}
-			)
-			.then((res) => console.log(res.data));
+	const handleChange = (e) => {
+		setData({ ...data, [e.target.name]: e.target.value });
 	};
 
 	useEffect(() => {
 		if (!ref.current) return null;
 	}, [ref]);
 
+	const handleUpload = (e) => {
+		e.preventDefault();
+		let formData = new FormData();
+
+		formData.append("file", file);
+		formData.append("title", data.title);
+		formData.append("description", data.description);
+
+		const config = {
+			headers: {
+				"content-Type": "multipart/form-data",
+			},
+			onUploadProgress: (data) => {
+				console.log(Math.floor((data.loaded * 100) / data.total));
+			},
+		};
+
+		axios
+			.post("http://127.0.0.1:8000/api/upload/", formData, config)
+			.then((res) => console.log(res.data));
+
+		setData({
+			title: "",
+			description: "",
+			username: "",
+		});
+
+		setFile(null);
+	};
+
 	return (
 		<StyledUpload>
 			<div ref={ref} className="container">
-				<form className="form">
+				<form className="form" onSubmit={handleUpload}>
 					<input
-						onChange={handleFileUpload}
+						onChange={handleFile}
 						type="file"
 						className="form-input file"
 					/>
-					<input type="text" placeholder="Title" className="form-input" />
+					<input
+						type="text"
+						name="title"
+						placeholder="Title"
+						className="form-input"
+						onChange={handleChange}
+						value={data.title}
+					/>
 					<textarea
 						name="description"
 						id="description"
+						onChange={handleChange}
 						placeholder="Enter the video detail"
 						cols="30"
 						rows="10"
+						value={data.description}
 					></textarea>
 					<button className="btn-upload">Upload</button>
 				</form>

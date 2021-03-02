@@ -10,11 +10,33 @@ import Sidebar from "../sidebar/Sidebar";
 import Categories from "./Categories";
 import Podcasts from "./Podcasts";
 
-const Sidenav = ({ sideNavActive, setSidenavActive }) => {
+const Sidenav = ({
+	sideNavActive,
+	setSidenavActive,
+	category,
+	setCategory,
+}) => {
 	const ref = useRef(null);
 	const [active, setActive] = useState(false);
 	const [activeSlide, setActiveSlide] = useState(null);
 	const history = useHistory();
+
+	useEffect(() => {
+		if (!sideNavActive) {
+			document.addEventListener("click", handleClickOutside);
+		}
+
+		return () => {
+			document.removeEventListener("click", handleClickOutside);
+		};
+	}, [ref]);
+
+	const handleClickOutside = (e) => {
+		if (ref && !ref.current.contains(e.target)) {
+			// setSidenavActive(false);
+			console.log(sideNavActive);
+		}
+	};
 
 	useEffect(() => {
 		history.listen(() => {
@@ -67,7 +89,7 @@ const Sidenav = ({ sideNavActive, setSidenavActive }) => {
 						BACK
 					</button>
 					{activeSlide === "categories" ? (
-						<Categories />
+						<Categories category={category} setCategory={setCategory} />
 					) : activeSlide === "podcasts" ? (
 						<Podcasts />
 					) : (

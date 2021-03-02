@@ -1,12 +1,20 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 // Icons
 import { AiOutlineMenu } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
 import { WiAlien } from "react-icons/wi";
 
-const Navbar = ({ sideNavActive, setSidenavActive }) => {
+// Redux
+
+const Navbar = ({
+	sideNavActive,
+	setSidenavActive,
+	isAuthenticated,
+	handleLogout,
+}) => {
 	const [active, setActive] = useState(false);
 	const [search, setSearch] = useState("");
 	const history = useHistory();
@@ -18,6 +26,15 @@ const Navbar = ({ sideNavActive, setSidenavActive }) => {
 
 	const handleSearchChange = (e) => {
 		setSearch(e.target.value);
+	};
+
+	const handleSearch = (e) => {
+		e.preventDefault();
+		history.push({
+			pathname: "/result",
+			search: `?search=${search.split(" ").join("+")}`,
+		});
+		setSearch("");
 	};
 
 	return (
@@ -43,33 +60,50 @@ const Navbar = ({ sideNavActive, setSidenavActive }) => {
 					</h2>
 				</div>
 				<div className="nav-controls">
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							history.push(`?search=${search}`);
-						}}
-					>
+					<form onSubmit={handleSearch}>
 						<input
 							type="text"
 							onChange={handleSearchChange}
+							value={search}
 							placeholder="Search"
 							className="nav-search"
 						/>
 					</form>
-					<Link to="/login" className="nav-action signin">
-						Sign in
-					</Link>
-					<Link
-						to={{
-							pathname: "/join",
-							state: {
-								prevPath: location.pathname,
-							},
-						}}
-						className="nav-action signup"
-					>
-						Signup
-					</Link>
+					{isAuthenticated ? (
+						<>
+							<button onClick={handleLogout} className="nav-action signin">
+								Logout
+							</button>
+							<Link
+								to="/user"
+								className="nav-action"
+								style={{
+									fontSize: "1.4rem",
+									display: "flex",
+									alignItems: "center",
+								}}
+							>
+								<CgProfile />
+							</Link>
+						</>
+					) : (
+						<>
+							<Link to="/login" className="nav-action signin">
+								Sign in
+							</Link>
+							<Link
+								to={{
+									pathname: "/join",
+									state: {
+										prevPath: location.pathname,
+									},
+								}}
+								className="nav-action signup"
+							>
+								Signup
+							</Link>
+						</>
+					)}
 				</div>
 			</div>
 		</StyledNav>
@@ -154,6 +188,7 @@ const StyledNav = styled.nav`
 				padding: 0.3rem 1rem;
 				margin-right: 1rem;
 				color: #54a0bf;
+				cursor: pointer;
 
 				&.signup {
 					border-radius: 30px;

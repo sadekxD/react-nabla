@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const VideoItem = ({ id, title, thumb }) => {
+const VideoItem = ({ id, title, thumb, author }) => {
 	return (
 		<StyledItem to={`/watch/${id}`}>
 			<div className="thumbnail-wrapper">
@@ -26,7 +26,7 @@ const VideoItem = ({ id, title, thumb }) => {
 				</picture>
 				<div className="title">{title}</div>
 				<div className="meta">
-					<span className="avata-name">JackSlumber </span>
+					<span className="avata-name">{author} </span>
 					<span className="bullet">•</span>
 					<span className="timestamp"> 4 days ago</span>
 				</div>

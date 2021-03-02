@@ -8,9 +8,8 @@ import Creators from "../components/creators/Creators";
 // router
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
-const Main = () => {
+const Main = ({ category, setCategory }) => {
 	const [activeItem, setActiveItem] = useState("videos");
-	const [category, setCategory] = useState("Everything");
 	let { path, url } = useRouteMatch();
 
 	return (

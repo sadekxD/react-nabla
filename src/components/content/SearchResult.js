@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import VideoItem from "./VideoItem";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 
-//Redux
+// Redux
 import { useDispatch, useSelector } from "react-redux";
-import { loadVideos } from "../../store/actions/videosActions";
+import { loadSearch } from "../../store/actions/videosActions";
 
-const Content = () => {
+const SearchResult = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
-	const videos = useSelector((state) => state.videos.videos);
-
+	const result = useSelector((state) => state.videos.searched);
+	const [search, setSearch] = useState("");
 	// const getData = async () => {
 	// 	const res = await axios.get(
 	// 		"https://my-json-server.typicode.com/sadekxD/json-for-test/videos/"
@@ -32,33 +31,24 @@ const Content = () => {
 	// };
 
 	useEffect(() => {
-		dispatch(loadVideos());
-	}, [dispatch]);
-
-	// useEffect(() => {
-	// 	const params = new URLSearchParams(location.search);
-	// 	const category = params.get("category");
-
-	// 	if (category && category !== "everything") {
-	// 		document.title = category;
-	// 		getByCat(category);
-	// 	}
-
-	// 	if (category === "everything") {
-	// 		// history.push("videos");
-	// 		getData();
-	// 	}
-	// }, [location]);
+		const params = new URLSearchParams(location.search);
+		const search_kwarg = params.get("search");
+		dispatch(loadSearch(search_kwarg));
+		setSearch(search_kwarg);
+	}, [location, dispatch]);
 
 	return (
 		<StyledContent>
+			<h2 className="search-header">
+				Search Result :{" "}
+				<span style={{ color: "gray", fontWeight: 300 }}>{search}</span>
+			</h2>
 			<div className="content-wrapper">
-				{videos.map((v, index) => (
+				{result.map((v, index) => (
 					<VideoItem
 						key={index}
 						title={v.title}
 						thumb={v.thumbnail}
-						author={v.author}
 						id={v.id}
 					/>
 				))}
@@ -70,11 +60,20 @@ const Content = () => {
 const StyledContent = styled.div`
 	padding: 24px 50px;
 
+	.search-header {
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 22px;
+		margin: 8px 0px;
+		color: #fff;
+	}
+
 	.content-wrapper {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 		grid-template-rows: auto;
 		gap: 40px;
+		margin-top: 1.2rem;
 
 		@media screen and (max-width: 1990px) {
 			grid-template-columns: repeat(3, 1fr);
@@ -122,4 +121,4 @@ const StyledContent = styled.div`
 	}
 `;
 
-export default Content;
+export default SearchResult;

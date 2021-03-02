@@ -1,8 +1,36 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import { authLogin } from "../../store/actions/authActions";
+
 const Signup = () => {
+	const [state, setState] = useState({ username: "", password: "" });
+	const dispatch = useDispatch();
+	const token = useSelector((state) => state.auth.token);
+	const history = useHistory();
+
+	console.log(token);
+
+	const handleChange = (e) => {
+		setState({ ...state, [e.target.name]: e.target.value });
+		console.log(state);
+	};
+
+	const handleLogin = (e) => {
+		e.preventDefault();
+		const { username, password } = state;
+		if (username && password) {
+			dispatch(authLogin(username, password));
+		}
+	};
+
+	if (token) {
+		history.push("/videos");
+	}
+
 	return (
 		<StyledSignup>
 			<div className="form-wrapper">
@@ -11,14 +39,16 @@ const Signup = () => {
 					<h3 className="form-text">Sign in</h3>
 					<p className="text-small">Welcome back</p>
 				</div>
-				<form>
+				<form onSubmit={handleLogin}>
 					<div className="input-wrapper">
 						<input
-							type="email"
+							type="text"
 							className="form-input"
 							placeholder="Your email"
-							name="email"
+							name="username"
 							id="email"
+							value={state.username}
+							onChange={handleChange}
 						/>
 						<input
 							type="password"
@@ -26,6 +56,8 @@ const Signup = () => {
 							className="form-input"
 							name="password"
 							id="password"
+							value={state.password}
+							onChange={handleChange}
 						/>
 					</div>
 					<button className="btn-submit">Sign In</button>

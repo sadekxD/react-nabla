@@ -1,20 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const Category = ({ item }) => {
+export const Category = ({ onClick, to, title, icon }) => {
 	return (
 		<StyledCategory
 			href="#"
 			// onClick={() => activeItem(item.id)}
+			onClick={onClick}
+			to={to}
 			className="side-item"
 		>
-			<span className="icon">{item.icon}</span>
-			{item.title}
+			<span className="icon">{icon}</span>
+			{title}
 		</StyledCategory>
 	);
 };
 
-const StyledCategory = styled.a`
+const StyledCategory = styled(Link)`
 	padding: 0.5rem 2rem;
 	font-size: 14px;
 	font-weight: 300;
@@ -37,5 +40,3 @@ const StyledCategory = styled.a`
 		background-color: rgba(0, 0, 0, 0.3);
 	}
 `;
-
-export default Category;

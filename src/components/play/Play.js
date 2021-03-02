@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { videos } from "../../objects/Videos";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { loadDetail } from "../../store/actions/detailAction";
 
 const Play = () => {
-	const [data, setData] = useState([]);
+	const video = useSelector((state) => state.detail.video);
+	const isLoading = useSelector((state) => state.detail.isLoading);
+	const dispatch = useDispatch();
 	const { id } = useParams();
 
 	useEffect(() => {
-		const res = videos.filter((video) => video.id === parseInt(id));
-		setData(res);
-	}, [id]);
+		if (id) {
+			dispatch(loadDetail(id));
+		}
+	}, [dispatch, id]);
 
 	return (
 		<StyledView>
-			{data.map((video) => (
+			{!isLoading ? (
 				<div id={video.id}>
 					<div className="video-container">
 						<div className="video-screen">
@@ -22,7 +28,7 @@ const Play = () => {
 						src="http://gvimage.zype.com/5c182d06649f0f134a001703/603533ff101edd00014b57c5/custom_thumbnail/1080.png?1614099455"
 						alt="image"
 					/> */}
-							<video src={video.url} autoPlay controls></video>
+							<video src={video.file} autoPlay controls></video>
 						</div>
 					</div>
 					<div className="video-info">
@@ -42,35 +48,15 @@ const Play = () => {
 								className="avatar"
 							/>
 
-							<h4 className="name">Sadek</h4>
+							<h4 className="name">{video.author}</h4>
 							<span className="category">animator</span>
 						</div>
-						<div className="row-3">
-							Maui may be a bit of a trickster god, but at heart, he's a good
-							demigod! Look at everything he's done for humanity (and a little
-							bit to show off). He lasso'd the sun to make the days longer,
-							discovered how to make fire from the hens, and even brought in the
-							biggest catch that ever was: A whole island chain. I mean, what
-							can we say except thank you? Support the people who make this
-							show, vote for future Extra History topics and get great perks at
-							our Patreon! https://bit.ly/EHPatreon Subscribe & ! to our channel
-							on YouTube at https://bit.ly/SubToEC Got more info about Extra
-							Credits on our website at https://extracredits.site/ Grab your
-							Extra Credits gear at the store! https://extracredits.store/
-							Thanks for participating in this week's discussion! We want you to
-							be aware of our community posting guidelines so that we can have
-							high-quality conversations:
-							https://www.extracredits.site/extra-credits-community-code-of-con
-							Come chat with us live on Twitch https://bit.ly/ECtwitch Want more
-							Extra Credits? Follow us on social media: Twitter :
-							https://bit.ly/ECTweet Facebook : https://bit.ly/ECFBPage
-							Instagram : https://bit.ly/ECisonInstagram ♪ Music: "Extra
-							Mythology Theme" by Big Giant Circles
-							https://www.biggiantcircles.com/
-						</div>
+						<div className="row-3">{video.description}</div>
 					</div>
 				</div>
-			))}
+			) : (
+				<h1 style={{ fontSize: "10rem", color: "#fff" }}>Is Loading</h1>
+			)}
 		</StyledView>
 	);
 };
@@ -110,12 +96,14 @@ const StyledView = styled.div`
 
 			.title {
 				font-size: 20px;
+				font-weight: 300;
 			}
 
 			.row-bottom {
 				display: flex;
-				font-size: 14px;
+				font-size: 12px;
 				align-items: center;
+				font-weight: 300;
 
 				span {
 					&:nth-child(2) {
@@ -157,6 +145,7 @@ const StyledView = styled.div`
 				color: #fff;
 				grid-area: name;
 				font-size: 14px;
+				font-weight: 300;
 			}
 
 			.category {
