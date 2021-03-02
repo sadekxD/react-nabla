@@ -6,62 +6,45 @@ import axios from "axios";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { loadVideos } from "../../store/actions/videosActions";
+import { loadVideos, loadCategory } from "../../store/actions/videosActions";
 
 const Content = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
-	const videos = useSelector((state) => state.videos.videos);
-
-	// const getData = async () => {
-	// 	const res = await axios.get(
-	// 		"https://my-json-server.typicode.com/sadekxD/json-for-test/videos/"
-	// 	);
-	// 	if (res.status === 200) {
-	// 		setData(res.data);
-	// 	}
-	// };
-
-	// const getByCat = async (cat) => {
-	// 	const res = await axios.get(
-	// 		`https://my-json-server.typicode.com/sadekxD/json-for-test/videos/?category=${cat}`
-	// 	);
-	// 	if (res.status === 200) {
-	// 		setData(res.data);
-	// 	}
-	// };
+	const { isLoading, videos } = useSelector((state) => state.videos);
 
 	useEffect(() => {
-		dispatch(loadVideos());
-	}, [dispatch]);
+		const params = new URLSearchParams(location.search);
+		const category = params.get("category");
 
-	// useEffect(() => {
-	// 	const params = new URLSearchParams(location.search);
-	// 	const category = params.get("category");
+		if (category && category !== "everything") {
+			document.title = category;
+			dispatch(loadCategory(category));
+		}
 
-	// 	if (category && category !== "everything") {
-	// 		document.title = category;
-	// 		getByCat(category);
-	// 	}
+		if (category === "everything") {
+			dispatch(loadVideos());
+		}
 
-	// 	if (category === "everything") {
-	// 		// history.push("videos");
-	// 		getData();
-	// 	}
-	// }, [location]);
+		if (!category) {
+			dispatch(loadVideos());
+		}
+	}, [location, dispatch]);
 
 	return (
 		<StyledContent>
 			<div className="content-wrapper">
-				{videos.map((v, index) => (
-					<VideoItem
-						key={index}
-						title={v.title}
-						thumb={v.thumbnail}
-						author={v.author}
-						id={v.id}
-					/>
-				))}
+				{!isLoading
+					? videos.map((v, index) => (
+							<VideoItem
+								key={index}
+								title={v.title}
+								thumb={v.thumbnail}
+								author={v.author}
+								id={v.id}
+							/>
+					  ))
+					: ""}
 			</div>
 		</StyledContent>
 	);

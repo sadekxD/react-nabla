@@ -44,15 +44,15 @@ const Navbar = ({
 					<AiOutlineMenu />
 				</span>
 				<ul className="nav-menu">
-					<a href="#" className="nav-link">
+					<Link to="#" className="nav-link">
 						Featured
-					</a>
+					</Link>
 					<Link to="/videos" className="nav-link">
 						Videos
 					</Link>
-					<a href="#" className="nav-link">
-						Podcast
-					</a>
+					<Link to="/creators" className="nav-link">
+						Creators
+					</Link>
 				</ul>
 				<div className="nav-logo">
 					<h2>

@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import UserItem from "./UserItem";
 
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import { loadCreatorsDetail } from "../../store/actions/creatorsActions";
 const User = () => {
+	const { id } = useParams();
+	const dispatch = useDispatch();
+	const { isLoading, detail } = useSelector((state) => state.creatorDetails);
+
+	useEffect(() => {
+		if (id) {
+			dispatch(loadCreatorsDetail(id));
+		}
+	}, [dispatch, id]);
+
+	console.log(isLoading, detail);
+
 	return (
 		<StyledUser>
 			<div className="cover-img">
@@ -25,20 +41,6 @@ const User = () => {
 				<div className="user-content">
 					<h2 className="content-header">Videos</h2>
 					<div className="content-wrapper">
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
-						<UserItem />
 						<UserItem />
 						<UserItem />
 					</div>

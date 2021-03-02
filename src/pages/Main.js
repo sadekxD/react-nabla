@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import styled from "styled-components";
 import Sidebar from "../components/sidebar/Sidebar";
 import Content from "../components/content/Content";
@@ -8,7 +8,7 @@ import Creators from "../components/creators/Creators";
 // router
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
-const Main = ({ category, setCategory }) => {
+const Main = ({ category, setCategory, children }) => {
 	const [activeItem, setActiveItem] = useState("videos");
 	let { path, url } = useRouteMatch();
 
@@ -17,15 +17,7 @@ const Main = ({ category, setCategory }) => {
 			<Sidebar category={category} setCategory={setCategory} />
 			<main id="main">
 				<Header category={category} url={url} setActiveItem={setActiveItem} />
-				<Switch>
-					<Route exact path={`${path}`}>
-						<Content />
-					</Route>
-					<Route exact path={`${path}/creators`}>
-						<Creators />
-					</Route>
-				</Switch>
-				{/* {activeItem === "videos" ? <Content /> : <Creators />} */}
+				{children}
 			</main>
 		</StyledMain>
 	);

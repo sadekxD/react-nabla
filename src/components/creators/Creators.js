@@ -1,23 +1,55 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 import Card from "./Card";
 
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import {
+	loadCreators,
+	loadCreatorByCategory,
+} from "../../store/actions/creatorsActions";
+
 const Creators = () => {
+	const location = useLocation();
+	const dispatch = useDispatch();
+	const { isLoading, creators } = useSelector((state) => state.creators);
+
+	useEffect(() => {
+		const params = new URLSearchParams(location.search);
+		const category = params.get("category");
+
+		if (category && category !== "everything") {
+			document.title = category;
+			dispatch(loadCreatorByCategory(category));
+		}
+
+		if (category === "everything") {
+			dispatch(loadCreators());
+		}
+
+		if (!category) {
+			dispatch(loadCreators());
+		}
+	}, [location, dispatch]);
+
 	return (
 		<StyledContent>
 			<div className="creator-wrapper">
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
+				{!isLoading ? (
+					creators.map((c, index) => (
+						<Card
+							key={index}
+							id={c.id}
+							username={c.username}
+							category={c.category}
+							profile_img={c.profile_img}
+							cover_img={c.cover_img}
+						/>
+					))
+				) : (
+					<h1 style={{ fontSize: "10rem", color: "gray" }}>Loading</h1>
+				)}
 			</div>
 		</StyledContent>
 	);

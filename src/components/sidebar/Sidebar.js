@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useRouteMatch } from "react-router-dom";
 import { Category } from "../Items/Category";
 
 //obj
@@ -9,6 +9,9 @@ import { SidebarObj } from "../../objects/SidebarObj";
 const Sidebar = ({ category, setCategory }) => {
 	const ref = useRef(null);
 	const location = useLocation();
+	const { url, path } = useRouteMatch();
+
+	console.log(url, path);
 
 	useEffect(() => {
 		if (!useRef) return null;
@@ -24,8 +27,7 @@ const Sidebar = ({ category, setCategory }) => {
 			}
 		}
 
-		setCategory(title);
-		console.log(category);
+		// setCategory(title);
 	};
 
 	return (
@@ -39,7 +41,7 @@ const Sidebar = ({ category, setCategory }) => {
 							title={item.title}
 							icon={item.icon}
 							to={{
-								pathname: "/videos",
+								pathname: path,
 								search: `category=${item.title.toLowerCase()}`,
 								state: { prevPath: location.pathname },
 							}}
@@ -55,6 +57,7 @@ const Sidebar = ({ category, setCategory }) => {
 
 const StyledSidebar = styled.div`
 	max-width: 260px;
+	min-width: 260px;
 	width: 100%;
 	background-color: rgb(25, 31, 33);
 	height: calc(100vh - 72px);

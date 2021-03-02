@@ -15,10 +15,10 @@ export const SidebarObj = [
 	{ id: 4, icon: <FaUniversity />, title: "History" },
 	{ id: 5, icon: <BsMusicNote />, title: "Music" },
 	{ id: 6, icon: <AiFillStar />, title: "Original" },
-	{ id: 7, icon: <GiMaterialsScience />, title: "Science & Engineering" },
+	{ id: 7, icon: <GiMaterialsScience />, title: "Science" },
 	{ id: 8, icon: <FcBiotech />, title: "Technology" },
 	{ id: 9, icon: <GiPencil />, title: "Writting" },
-	{ id: 10, icon: <GiFilmStrip />, title: "Film & TV" },
+	{ id: 10, icon: <GiFilmStrip />, title: "Film" },
 ];
 
 export const PodcastObj = [

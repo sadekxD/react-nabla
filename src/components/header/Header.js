@@ -9,7 +9,7 @@ const Header = ({ setActiveItem, category, url }) => {
 		<StyledHeader>
 			<div className="head">
 				<h2>{category}</h2>
-				<div className="head-group">
+				{/* <div className="head-group">
 					<div
 						className="head-item active"
 						onClick={() => {
@@ -19,17 +19,10 @@ const Header = ({ setActiveItem, category, url }) => {
 					>
 						Videos
 					</div>
-					<Link
-						className="head-item"
-						to={`${url}/creators`}
-						// onClick={() => {
-						// 	setActiveItem("creators");
-						// 	history.push(`/${url}creators`);
-						// }}
-					>
+					<Link className="head-item" to={`${url}/creators`}>
 						Creators
 					</Link>
-				</div>
+				</div> */}
 			</div>
 		</StyledHeader>
 	);

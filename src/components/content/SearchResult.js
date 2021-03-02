@@ -46,6 +46,7 @@ const SearchResult = () => {
 			<div className="content-wrapper">
 				{result.map((v, index) => (
 					<VideoItem
+						author={v.author}
 						key={index}
 						title={v.title}
 						thumb={v.thumbnail}

@@ -24,6 +24,8 @@ import { GlobalStyle } from "./style/GlobalStyles";
 // Action
 import { authCheckState, logout } from "./store/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
+import Creators from "./components/creators/Creators";
+import Content from "./components/content/Content";
 
 function App() {
 	const [sideNavActive, setSidenavActive] = useState(false);
@@ -61,7 +63,14 @@ function App() {
 			/>
 			<Switch>
 				<Route path="/videos">
-					<Main category={category} setCategory={setCategory} />
+					<Main category={category} setCategory={setCategory}>
+						<Content />
+					</Main>
+				</Route>
+				<Route exact path="/creators">
+					<Main>
+						<Creators />
+					</Main>
 				</Route>
 				<Route path="/result">
 					<SearchResult />
@@ -75,7 +84,7 @@ function App() {
 				<Route exact path="/join">
 					<Signup />
 				</Route>
-				<Route exact path="/user">
+				<Route exact path="/user/:id">
 					<User />
 				</Route>
 				<Route exact path="/upload">

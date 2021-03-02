@@ -1,41 +1,29 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const Card = () => {
+const Card = ({ id, username, category, profile_img, cover_img }) => {
 	return (
-		<StyledCard href="#">
+		<StyledCard to={`/user/${id}`}>
 			<div className="thumbnail-wrapper">
-				<img
-					src="https://gvimage.zype.com/5c182d06649f0f134a001703/6032d2e0aeceae0001f49b02/custom_thumbnail/240.png?1613943520"
-					alt="thumbnail"
-					className="thumbnail"
-				/>
+				<img src={cover_img} alt="thumbnail" className="thumbnail" />
 			</div>
 			<div className="creator-info">
 				<picture className="avatar">
-					<source
-						srcSet="https://d2jmuhqh03r5dz.cloudfront.net/5c182d06649f0f134a001703/playlist_image/5f343df12a4fe300018dafbf/1597259249/64.webp"
-						type="image/webp"
-					/>
-					<source
-						srcSet="https://d2jmuhqh03r5dz.cloudfront.net/5c182d06649f0f134a001703/playlist_image/5f343df12a4fe300018dafbf/1597259249/64.jpg"
-						type="image/webp"
-					/>
-					<img
-						src="https://d2jmuhqh03r5dz.cloudfront.net/5c182d06649f0f134a001703/playlist_image/5f343df12a4fe300018dafbf/1597259249/64.jpg"
-						alt="avatar"
-					/>
+					<source srcSet={profile_img} type="image/webp" />
+					<source srcSet={profile_img} type="image/webp" />
+					<img src={profile_img} alt="avatar" />
 				</picture>
-				<div className="title">JackSlumber</div>
+				<div className="title">{username}</div>
 				<div className="meta">
-					<span className="category">History</span>
+					<span className="category">{category}</span>
 				</div>
 			</div>
 		</StyledCard>
 	);
 };
 
-const StyledCard = styled.a`
+const StyledCard = styled(Link)`
 	max-width: 100%;
 	min-width: 100%;
 	max-height: 300px;
